@@ -1,0 +1,36 @@
+
+
+//Count substrings with same first and last characters
+public class SubStringCountFirstLastChar {
+	public static int MAX_CHAR = 26;
+
+	public static void main(String[] args) {
+		String input = "abcab";
+		System.out.println("input : " + input);
+		int count = countSubstringWithEqualEnds(input);
+		System.out.println("count : " + count);
+	}
+
+	/*
+	 * if we carefully observe then we can realize that the answer just depends
+	 * on frequencies of characters in the original string. For example in
+	 * string abcab, frequency of ‘a’ is 2 and substrings contributing to answer
+	 * are a, abca and a respectively, a total of 3, which is calculated by
+	 * (frequency of ‘a’+1)C2.
+	 */
+	public static int countSubstringWithEqualEnds(String input) {
+		int result = 0;
+		int n = input.length();
+		char[] arr = input.toCharArray();
+		// Calculating frequency of each character in the string.
+		int[] count = new int[MAX_CHAR];
+		for (int i = 0; i < n; i++)
+			count[arr[i] - 'a']++;
+
+		// Computing result using counts
+		for (int i = 0; i < MAX_CHAR; i++)
+			result += (count[i] * (count[i] + 1) / 2);
+
+		return result;
+	}
+}
